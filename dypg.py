@@ -80,7 +80,7 @@ def migrate(psql_db, dynamodb_table_name, data_dynamodb):
                         # ignoring nested data.
                         continue
                     elif isinstance(col_data, set) or isinstance(col_data, list):
-                        col_data = ', '.join(col_data)
+                        col_data = ', '.join(repr(col_data))
 
                     if k not in seen_columns:
                         seen_columns.append(k)
