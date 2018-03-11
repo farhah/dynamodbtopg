@@ -15,7 +15,7 @@ class PSQLDataType(Enum):
     BOOL = 'bool'
     NULL = 'text'
     SET = 'text'
-    DICT = 'JSON'
+    DICT = 'text'
     LIST = 'text'
 
 
@@ -76,11 +76,8 @@ def migrate(psql_db, dynamodb_table_name, data_dynamodb):
                     col_data = datum[k]
                     col_pg_data_type = to_pg_datatype(col_data)
 
-                    if isinstance(col_data, dict):
-                        # ignoring nested data.
-                        continue
-                    elif isinstance(col_data, set) or isinstance(col_data, list):
-                        col_data = ', '.join(repr(col_data))
+                    if isinstance(col_data, set) or isinstance(col_data, list) or isinstance(col_data, dict):
+                        col_data = ''.join(repr(col_data))  # stored nested data in literal.
 
                     if k not in seen_columns:
                         seen_columns.append(k)
@@ -200,7 +197,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='DynamoToPG', description='Migrate dynamodb to psql. Dict is omitted - ignoring nested data.')
+    parser = argparse.ArgumentParser(prog='DynamoToPG', description='Migrate dynamodb to psql. Nested data (dict and list) are stored literally.')
     parser.add_argument('-r', dest='region', required=True)
     parser.add_argument('-dt', dest='dynamodb_table_name', required=True)
     parser.add_argument('-hs', dest='host', required=True)
