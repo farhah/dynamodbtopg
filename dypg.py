@@ -173,7 +173,7 @@ def scan_dyanmodb(dynamodb, dynamodb_table_name):
         for i in response['Items']:
             data_dynamodb.append(i)
 
-    print(data_dynamodb)
+    # print(data_dynamodb)
     print('Scan data is done.')
     print('---------------------------------------------------')
     return data_dynamodb
