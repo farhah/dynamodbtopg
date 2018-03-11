@@ -1,2 +1,3 @@
 # dynamodbtopg
-Non nested data migration from dynamodb to pg.
+Data migration from dynamodb to pg.
+Nested data (dict, list) are in their literal sytax.
