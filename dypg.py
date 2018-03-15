@@ -135,6 +135,7 @@ def aws_credentials():
         creds2 = read_aws_credentials('~/.aws/credentials', 'default')
         if not creds2:
             raise Exception("Couldn't find aws credentials files in ~/.boto and ~/.aws/credentials")
+        return creds2[0], creds2[1]
 
     return creds[0], creds[1]
 
